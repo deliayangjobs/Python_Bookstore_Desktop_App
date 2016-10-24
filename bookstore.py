@@ -14,9 +14,9 @@ Close the window
 """
 
 from tkinter import *
-import bookstore_backend
+from bookstore_backend import Database
 
-
+database = Database("books.db")
 window=Tk()
 window.wm_title("BookStore")
 
@@ -35,24 +35,24 @@ def get_selected_row(event):
 
 def view_command():
     list1.delete(0,END)
-    for row in bookstore_backend.view():
+    for row in database.view():
         list1.insert(END,row)
 
 def search_command():
     list1.delete(0,END)
-    for row in bookstore_backend.search(title_text.get(), author_text.get(), year_text.get(), isbn_text.get()):
+    for row in database.search(title_text.get(), author_text.get(), year_text.get(), isbn_text.get()):
         list1.insert(END, row)
 
 def add_command():
     list1.delete(0,END)
-    bookstore_backend.insert(title_text.get(), author_text.get(), year_text.get(), isbn_text.get())
+    database.insert(title_text.get(), author_text.get(), year_text.get(), isbn_text.get())
     list1.insert(END, (title_text.get(), author_text.get(), year_text.get(), isbn_text.get()))
 
 def delete_command():
-    bookstore_backend.delete(selected_tuple[0])
+    database.delete(selected_tuple[0])
 
 def update_command():
-    bookstore_backend.update(selected_tuple[0], title_text.get(), author_text.get(), year_text.get(), isbn_text.get())
+    database.update(selected_tuple[0], title_text.get(), author_text.get(), year_text.get(), isbn_text.get())
 
 
 l1=Label(window, text="Title")
